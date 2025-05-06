@@ -9,7 +9,7 @@ export class InitialUserRoleSetup1680000000000 implements MigrationInterface {
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT NOT NULL UNIQUE,
-                    status INTEGER NULL
+                    status TEXT NOT NULL CHECK(status IN ('Enabled', 'Disabled', 'Deleted'))
                 )
             `);
 
@@ -32,9 +32,9 @@ export class InitialUserRoleSetup1680000000000 implements MigrationInterface {
 
       await queryRunner.query(`
                 INSERT OR IGNORE INTO users (username, status) VALUES
-                ('admin_user', 1),
-                ('regular_user', 1),
-                ('editor_user', 1)
+                ('admin_user', 'Enabled'),
+                ('regular_user', 'Enabled'),
+                ('editor_user', 'Enabled')
             `);
 
       await queryRunner.query(`
