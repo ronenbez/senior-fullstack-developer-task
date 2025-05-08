@@ -11,6 +11,9 @@ export class UsersService {
   ) {}
 
   findByUsername(username: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ username });
+    return this.usersRepository.findOne({
+      where: { username },
+      relations: ['roles']
+    });
   }
 }
